@@ -9,17 +9,43 @@
 </head>
 
 <body>
-    <canvas id="canvasElement" width="1600" height="900"></canvas>
+    <script id="default_vsh" type="x-shader/x-vertex">
+		attribute vec3 a_vertex;
+
+        uniform mat4 u_mvp;
+
+		void main()
+		{
+			gl_Position = u_mvp * vec4(a_vertex, 1.0);
+		}
+	</script>
+	<script id="default_fsh" type="x-shader/x-fragment">
+        uniform sampler2D u_texture;
+
+		void main()
+		{
+			gl_FragColor = vec4(0.0, 0.25, 0.5, 1.0);
+		}
+	</script>
+
+    <canvas id="canvasElement" width="480" height="480"></canvas>
 
     <div class="image-cache">
-        <!-- <img id="tile" src="resources/tile.png" />
+        <img id="tile" src="resources/tile.png" />
 		<img id="ntile" src="resources/ntile.png" />
-		<img id="death" src="resources/death.png" />
+
+
+		<!-- <img id="death" src="resources/death.png" />
 		<img id="vader" src="resources/vader.png" />
 		<img id="levi" src="resources/levi.png" /> -->
     </div>
 
     <script src="js/lodash.core.js" async></script>
+    <script src="js/tools.js" async></script>
+    <script src="js/buffer.js" async></script>
+    <script src="js/shader.js" async></script>
+    <script src="js/texture.js" async></script>
+    <script src="js/math.js" async></script>
     <script src="js/core.js" async></script>
     <script src="js/main.js" async></script>
 </body>
