@@ -10,22 +10,35 @@
 
 <body>
     <script id="default_vsh" type="x-shader/x-vertex">
-		attribute vec3 a_vertex;
+        precision highp float;
 
         uniform mat4 u_mvp;
 
-		void main()
-		{
-			gl_Position = u_mvp * vec4(a_vertex, 1.0);
-		}
+        varying vec2 v_textureCoordinate;
+
+        attribute vec3 a_vertex;
+        attribute vec3 a_textCoord;
+
+        void main()
+        {
+            v_textureCoordinate = a_textCoord.xy;
+
+            gl_Position = u_mvp * vec4(a_vertex, 1.0);
+        }
 	</script>
 	<script id="default_fsh" type="x-shader/x-fragment">
+        precision highp float;
+
         uniform sampler2D u_texture;
 
-		void main()
-		{
-			gl_FragColor = vec4(0.0, 0.25, 0.5, 1.0);
-		}
+        varying vec2 v_textureCoordinate;
+
+        void main()
+        {
+            vec4 color = texture2D(u_texture, v_textureCoordinate);
+
+            gl_FragColor = color;
+        }
 	</script>
 
     <canvas id="canvasElement" width="480" height="480"></canvas>
@@ -34,13 +47,12 @@
         <img id="tile" src="resources/tile.png" />
 		<img id="ntile" src="resources/ntile.png" />
 
-
 		<!-- <img id="death" src="resources/death.png" />
 		<img id="vader" src="resources/vader.png" />
 		<img id="levi" src="resources/levi.png" /> -->
     </div>
 
-    <script src="js/lodash.core.js" async></script>
+    <!-- <script src="js/lodash.core.js" async></script> -->
     <script src="js/tools.js" async></script>
     <script src="js/buffer.js" async></script>
     <script src="js/shader.js" async></script>

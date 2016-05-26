@@ -10,7 +10,10 @@ function Buffer(gl, data) {
         gl.STATIC_DRAW);
 }
 
-Buffer.prototype.draw = function (gl) {
+Buffer.prototype.bind = function (gl) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
-    gl.drawArrays(gl.TRIANGLES, 0, this.bufferLength / 3);
+};
+
+Buffer.prototype.draw = function (gl) {
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, this.bufferLength / 3);
 };
