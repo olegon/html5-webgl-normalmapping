@@ -13,7 +13,6 @@ body {
     font-size: 16px;
     line-height: 1.4em;
     color: #FFF;
-
 }
 
 .image-cache {
@@ -44,6 +43,15 @@ body {
     padding: 16px;
 }
 
+.dicas {
+    margin: 2.5rem 0;
+}
+.dicas .dica {
+    font-size: 0.85em;
+    font-style: italic;
+    color: rgb(243, 190, 37);
+}
+
 .fullsize {
     position: absolute;
     right: 0;
@@ -61,5 +69,5 @@ body {
         height: 128px;
         border: 2px solid #FFF;
         border-radius: 50%;
-        margin-right: 0.25em;
+        margin-right: 0.75em;
     }

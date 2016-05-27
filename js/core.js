@@ -31,7 +31,7 @@ Core.prototype.init = function(initCallback) {
     self.coreState.mouse.x = self.coreState.canvasElement.width * 0.2;
     self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
 
-    self.coreState.canvasContext = self.coreState.canvasElement.getContext('webgl');
+    self.coreState.canvasContext =  self.coreState.canvasElement.getContext('webgl') || self.coreState.canvasElement.getContext('experimental-webgl');
     if (this.coreState.canvasContext == null) {
         throw new Error('Não foi possível obter o contexto do WebGL.');
     }
