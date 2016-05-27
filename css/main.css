@@ -1,11 +1,65 @@
+html {
+    background-color: #000;
+}
+
 html,
 body {
     margin: 0;
     border: 0;
-    padding: 0;
+    padding: 0.25em 1em;
     overflow: hidden;
+
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4em;
+    color: #FFF;
+
 }
 
 .image-cache {
     display: none;
 }
+
+.titulo .rocks {
+    position: relative;
+    top: -16px;
+    left: 8px;
+
+    font-style: italic;
+    font-size: 0.65em;
+    color: rgb(255, 235, 59);
+    color: rgba(255, 235, 59, 0.95);
+}
+
+.subtitulo a {
+    position: relative;
+    top: -8px;
+    left: 0;
+
+
+    font-style: italic;
+    font-size: 0.75em;
+    color: #FFF;
+    text-decoration: none;
+    padding: 16px;
+}
+
+.fullsize {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.recurso-utilizado {
+    font-style: italic;
+}
+
+    .recurso-utilizado img {
+        vertical-align: middle;
+        width: 32px;
+        height: 32px;
+        border: 2px solid #FFF;
+        border-radius: 50%;
+        margin-right: 0.25em;
+    }

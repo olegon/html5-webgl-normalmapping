@@ -3,12 +3,30 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <title>HTML5 - WebGL - Normal Mapping</title>
 
     <link rel="stylesheet" href="css/main.css" media="screen">
 </head>
 
 <body>
+    <h1 class="titulo">HTML5 WebGL <span class="rocks">(Rocks!)</span></h1>
+    <h2 class="subtitulo"><em>Normal Mapping</em> <a href="https://en.wikipedia.org/wiki/Normal_mapping">Wikipedia</a></h2>
+
+    <p class="recurso-utilizado"><img id="tile" src="resources/tile.png" alt="tile" /> Tile</p>
+
+    <p class="recurso-utilizado"><img id="ntile" src="resources/ntile.png" alt="normal map" /> Normal map</p>
+
+    <canvas id="canvasElement" class="fullsize">
+        <p>Seu navegador não suporta canvas! :(</p>
+    </canvas>
+
+
+    <div class="image-cache">
+    </div>
+
     <script id="default_vsh" type="x-shader/x-vertex">
         uniform mat4 u_mv;
         uniform mat4 u_mvp;
@@ -43,7 +61,7 @@
             vec3 lightPosition = vec3(u_pos, 64.0);
             vec4 lightColor = vec4(0.0, 0.0, 0.0, 1.0);
             vec4 diffuseColor = vec4(227.0/255.0, 190.0/255.0, 127.0/255.0, 1.0);
-            float lightPower = 10000.0;
+            float lightPower = 12500.0;
 
 
             vec4 textureColor = texture2D(u_texture, v_texturePosition);
@@ -65,17 +83,6 @@
             gl_FragColor = ambient + diffuse + specular;
         }
 	</script>
-
-    <canvas id="canvasElement" width="480" height="480"></canvas>
-
-    <div class="image-cache">
-        <img id="tile" src="resources/tile.png" />
-		<img id="ntile" src="resources/ntile.png" />
-
-		<!-- <img id="death" src="resources/death.png" />
-		<img id="vader" src="resources/vader.png" />
-		<img id="levi" src="resources/levi.png" /> -->
-    </div>
 
     <!-- <script src="js/lodash.core.js" async></script> -->
     <script src="js/tools.js" async></script>

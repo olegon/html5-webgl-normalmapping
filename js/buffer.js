@@ -14,6 +14,6 @@ Buffer.prototype.bind = function (gl) {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
 };
 
-Buffer.prototype.draw = function (gl) {
-    gl.drawArrays(gl.TRIANGLE_FAN, 0, this.bufferLength / 3);
+Buffer.prototype.draw = function (gl, from, to) {
+    gl.drawArrays(gl.TRIANGLE_FAN, from, to);
 };

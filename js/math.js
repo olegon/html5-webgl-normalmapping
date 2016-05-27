@@ -1,11 +1,11 @@
 var math = (function () {
 	var module = {};
 
-	module.getVec4 = function() {
-		return [0.0, 0.0, 0.0, 1.0];
+	module.vector = function(a, b, c, d) {
+		return [a || 0.0, b || 0.0, c || 0.0, d || 1.0];
 	};
 
-	module.getIdentityMat44= function() {
+	module.matrix = function() {
 		return [
 			1.0, 0.0, 0.0, 0.0,
 			0.0, 1.0, 0.0, 0.0,
@@ -14,34 +14,34 @@ var math = (function () {
 		];
 	};
 
-	module.mat44Multiply = function(mat1, mat2) {
-		var mat = module.getIdentityMat44();
+	module.matrixMultiply = function(a, b) {
+		var mat = module.matrix();
 
-		mat[0] = mat1[0] * mat2[0] + mat1[4] * mat2[1] + mat1[8] * mat2[2] + mat1[12] * mat2[3];
-		mat[1] = mat1[1] * mat2[0] + mat1[5] * mat2[1] + mat1[9] * mat2[2] + mat1[13] * mat2[3];
-		mat[2] = mat1[2] * mat2[0] + mat1[6] * mat2[1] + mat1[10] * mat2[2] + mat1[14] * mat2[3];
-		mat[3] = mat1[3] * mat2[0] + mat1[7] * mat2[1] + mat1[11] * mat2[2] + mat1[15] * mat2[3];
+		mat[0] = a[0] * b[0] + a[4] * b[1] + a[8] * b[2] + a[12] * b[3];
+		mat[1] = a[1] * b[0] + a[5] * b[1] + a[9] * b[2] + a[13] * b[3];
+		mat[2] = a[2] * b[0] + a[6] * b[1] + a[10] * b[2] + a[14] * b[3];
+		mat[3] = a[3] * b[0] + a[7] * b[1] + a[11] * b[2] + a[15] * b[3];
 
-		mat[4] = mat1[0] * mat2[4] + mat1[4] * mat2[5] + mat1[8] * mat2[6] + mat1[12] * mat2[7];
-		mat[5] = mat1[1] * mat2[4] + mat1[5] * mat2[5] + mat1[9] * mat2[6] + mat1[13] * mat2[7];
-		mat[6] = mat1[2] * mat2[4] + mat1[6] * mat2[5] + mat1[10] * mat2[6] + mat1[14] * mat2[7];
-		mat[7] = mat1[3] * mat2[4] + mat1[7] * mat2[5] + mat1[11] * mat2[6] + mat1[15] * mat2[7];
+		mat[4] = a[0] * b[4] + a[4] * b[5] + a[8] * b[6] + a[12] * b[7];
+		mat[5] = a[1] * b[4] + a[5] * b[5] + a[9] * b[6] + a[13] * b[7];
+		mat[6] = a[2] * b[4] + a[6] * b[5] + a[10] * b[6] + a[14] * b[7];
+		mat[7] = a[3] * b[4] + a[7] * b[5] + a[11] * b[6] + a[15] * b[7];
 
-		mat[8] = mat1[0] * mat2[8] + mat1[4] * mat2[9] + mat1[8] * mat2[10] + mat1[12] * mat2[11];
-		mat[9] = mat1[1] * mat2[8] + mat1[5] * mat2[9] + mat1[9] * mat2[10] + mat1[13] * mat2[11];
-		mat[10] = mat1[2] * mat2[8] + mat1[6] * mat2[9] + mat1[10] * mat2[10] + mat1[14] * mat2[11];
-		mat[11] = mat1[3] * mat2[8] + mat1[7] * mat2[9] + mat1[11] * mat2[10] + mat1[15] * mat2[11];
+		mat[8] = a[0] * b[8] + a[4] * b[9] + a[8] * b[10] + a[12] * b[11];
+		mat[9] = a[1] * b[8] + a[5] * b[9] + a[9] * b[10] + a[13] * b[11];
+		mat[10] = a[2] * b[8] + a[6] * b[9] + a[10] * b[10] + a[14] * b[11];
+		mat[11] = a[3] * b[8] + a[7] * b[9] + a[11] * b[10] + a[15] * b[11];
 
-		mat[12] = mat1[0] * mat2[12] + mat1[4] * mat2[13] + mat1[8] * mat2[14] + mat1[12] * mat2[15];
-		mat[13] = mat1[1] * mat2[12] + mat1[5] * mat2[13] + mat1[9] * mat2[14] + mat1[13] * mat2[15];
-		mat[14] = mat1[2] * mat2[12] + mat1[6] * mat2[13] + mat1[10] * mat2[14] + mat1[14] * mat2[15];
-		mat[15] = mat1[3] * mat2[12] + mat1[7] * mat2[13] + mat1[11] * mat2[14] + mat1[15] * mat2[15];
+		mat[12] = a[0] * b[12] + a[4] * b[13] + a[8] * b[14] + a[12] * b[15];
+		mat[13] = a[1] * b[12] + a[5] * b[13] + a[9] * b[14] + a[13] * b[15];
+		mat[14] = a[2] * b[12] + a[6] * b[13] + a[10] * b[14] + a[14] * b[15];
+		mat[15] = a[3] * b[12] + a[7] * b[13] + a[11] * b[14] + a[15] * b[15];
 
 		return mat;
 	};
 
-	module.rotate = function(mat, angle, vec) {
-		var tmat = module.getIdentityMat44();
+	module.rotate = function(angle, vec) {
+		var mat = module.matrix();
 
 		var x = vec[0],
 			y = vec[1],
@@ -52,64 +52,50 @@ var math = (function () {
 
 		var oneMinusCos = 1.0 - c;
 
-		tmat[0] = x * x * oneMinusCos + c;
-		tmat[1] = x * y * oneMinusCos + z * s;
-		tmat[2] = x * z * oneMinusCos - y * s;
-		//tmat[3] = 0.0;
+		mat[0] = x * x * oneMinusCos + c;
+		mat[1] = x * y * oneMinusCos + z * s;
+		mat[2] = x * z * oneMinusCos - y * s;
 
-		tmat[4] = y * x * oneMinusCos - z * s;
-		tmat[5] = y * y * oneMinusCos + c;
-		tmat[6] = y * z * oneMinusCos + x * s;
-		//tmat[7] = 0.0;
+		mat[4] = y * x * oneMinusCos - z * s;
+		mat[5] = y * y * oneMinusCos + c;
+		mat[6] = y * z * oneMinusCos + x * s;
 
-		tmat[8] = z * x * oneMinusCos + y * s;
-		tmat[9] = z * y * oneMinusCos - x * s;
-		tmat[10] = z * z * oneMinusCos + c;
-		//tmat[11] = 0.0;
+		mat[8] = z * x * oneMinusCos + y * s;
+		mat[9] = z * y * oneMinusCos - x * s;
+		mat[10] = z * z * oneMinusCos + c;
 
-		//tmat[12] = 0.0;
-		//tmat[13] = 0.0;
-		//tmat[14] = 0.0;
-		//tmat[15] = 1.0;
-
-        if (mat == null) {
-            return tmat;
-        }
-        else {
-            return module.mat44Multiply(mat, tmat);
-        }
+        return mat;
 	};
 
-	module.translate = function(mat, vec) {
-		var tmat = module.getIdentityMat44();
+	module.translate = function(vec) {
+		var mat = module.matrix();
 
-		tmat[12] = vec[0];
-		tmat[13] = vec[1];
-		tmat[14] = vec[2];
+		mat[12] = vec[0];
+		mat[13] = vec[1];
+		mat[14] = vec[2];
 
-		return module.mat44Multiply(mat, tmat);
+		return mat;
 	};
 
-	module.scale = function(mat, vec) {
-		var tmat = module.getIdentityMat44();
+	module.scale = function(vec) {
+		var mat = module.matrix();
 
-		tmat[0] = vec[0];
-		tmat[5] = vec[1];
-		tmat[10] = vec[2];
+		mat[0] = vec[0];
+		mat[5] = vec[1];
+		mat[10] = vec[2];
 
-		return module.mat44Multiply(mat, tmat);
+		return mat;
 	};
 
-	module.getOrthoMatrix = function(l, r, b, t, n, f) {
-		var mat = module.getIdentityMat44();
+	module.orthoMatrix = function(left, right, bottom, top, near, far) {
+		var mat = module.matrix();
 
-		mat[0] = 2 / (r - l);
-		mat[5] = 2 / (t - b);
-		mat[10] = 2 / (n - f);
-		mat[12] = -(r + l) / (r - l);
-		mat[13] = -(t + b) / (t - b);
-		mat[14] = -(f + n) / (f - n);
-		//mat[15] = 1;
+		mat[0] = 2 / (right - left);
+		mat[5] = 2 / (top - bottom);
+		mat[10] = 2 / (near - far);
+		mat[12] = -(right + left) / (right - left);
+		mat[13] = -(top + bottom) / (top - bottom);
+		mat[14] = -(far + near) / (far - near);
 
 		return mat;
 	};

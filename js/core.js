@@ -31,8 +31,6 @@ Core.prototype.init = function(initCallback) {
     self.coreState.mouse.x = self.coreState.canvasElement.width * 0.2;
     self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
 
-
-
     self.coreState.canvasContext = self.coreState.canvasElement.getContext('webgl');
     if (this.coreState.canvasContext == null) {
         throw new Error('Não foi possível obter o contexto do WebGL.');
@@ -86,7 +84,7 @@ Core.prototype.init = function(initCallback) {
             };
         }
 
-        self.coreState.canvasElement.addEventListener('mousemove', function(e) {
+        window.addEventListener('mousemove', function(e) {
             self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
         });
     })();

@@ -11,13 +11,11 @@ Shader.prototype.compile = function(gl) {
 
     glShader = gl.createShader(this.type);
 
-    gl.shaderSource(glShader, tools.loadShaderSource(this.elementId));
+    gl.shaderSource(glShader, tools.getShaderSource(this.elementId));
     gl.compileShader(glShader);
 
     return glShader;
 };
-
-
 
 
 
