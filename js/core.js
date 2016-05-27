@@ -28,7 +28,7 @@ Core.prototype.init = function(initCallback) {
     self.coreState.canvasElement.width = window.outerWidth;
     self.coreState.canvasElement.height = window.innerHeight;
 
-    self.coreState.mouse.x = self.coreState.canvasElement.width * 0.2;
+    self.coreState.mouse.x = self.coreState.canvasElement.width * 0.75;
     self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
 
     self.coreState.canvasContext =  self.coreState.canvasElement.getContext('webgl') || self.coreState.canvasElement.getContext('experimental-webgl');
