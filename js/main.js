@@ -55,6 +55,7 @@ window.addEventListener('load', function() {
 
 
         core.sharedState.defaultProgram.setTexture(gl, "u_texture", 0);
+        core.sharedState.defaultProgram.setTexture(gl, "u_map", 1);
     });
 
     core.setUpdateCallback(function() {
@@ -77,10 +78,15 @@ window.addEventListener('load', function() {
             for (var j = 0; j < jc; j++) {
                 var mv = math.translate(identity, [j * 32.0, i * 32.0, 0.0]);
                 var mvp = math.mat44Multiply(core.sharedState.proj, mv);
+
+                core.sharedState.defaultProgram.setMat(gl, "u_mv", mv);
                 core.sharedState.defaultProgram.setMat(gl, "u_mvp", mvp);
+
                 core.sharedState.geometryBuffer.draw(gl);
             }
         }
+        
+        core.sharedState.defaultProgram.setUniform2f(gl, "u_pos", [core.coreState.mouse.x, core.coreState.mouse.y]);
     });
 
 });

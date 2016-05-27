@@ -105,6 +105,14 @@ ShaderProgram.prototype.setMat = function (gl, uniformName, mat) {
     gl.uniformMatrix4fv(uniformLocation, false, mat);
 };
 
+ShaderProgram.prototype.setUniform2f = function (gl, uniformName, a, b) {
+    this.checkUniformName(gl, uniformName);
+
+    var uniformLocation = this.uniformsLocation[uniformName];
+
+    gl.uniform2fv(uniformLocation, a, b);
+};
+
 ShaderProgram.prototype.setTexture = function (gl, uniformName, number) {
     this.checkUniformName(gl, uniformName);
 

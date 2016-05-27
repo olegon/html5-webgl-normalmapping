@@ -5,6 +5,10 @@ function Core(canvasId) {
             right: false,
             up: false,
             down: false
+        },
+        mouse: {
+            x: 0,
+            y: 0
         }
     };
 
@@ -20,6 +24,14 @@ Core.prototype.init = function(initCallback) {
     if (self.coreState.canvasElement == null) {
         throw new Error('Não foi possível encontrar o elemento Canvas.');
     }
+
+    self.coreState.canvasElement.width = window.outerWidth;
+    self.coreState.canvasElement.height = window.innerHeight;
+
+    self.coreState.mouse.x = self.coreState.canvasElement.width * 0.2;
+    self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
+
+
 
     self.coreState.canvasContext = self.coreState.canvasElement.getContext('webgl');
     if (this.coreState.canvasContext == null) {
@@ -61,6 +73,21 @@ Core.prototype.init = function(initCallback) {
             }
 
             preventScrolling(e);
+        });
+    })();
+
+    (function setupMouseEvents() {
+        function getMousePosition(canvas, e) {
+            var rect = canvas.getBoundingClientRect();
+
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        self.coreState.canvasElement.addEventListener('mousemove', function(e) {
+            self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
         });
     })();
 
