@@ -1,3 +1,10 @@
+import { Core } from './core';
+import { Shader, ShaderProgram } from './shader';
+import { Buffer } from './buffer';
+import { Texture } from './texture';
+import * as math from './math'
+
+
 window.addEventListener('load', function() {
     setup();
 });

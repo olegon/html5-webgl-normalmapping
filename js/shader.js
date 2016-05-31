@@ -1,4 +1,6 @@
-function Shader(elementId, type) {
+import * as tools from './tools'
+
+export function Shader(elementId, type) {
     this.elementId = elementId;
     this.type = type;
 }
@@ -19,7 +21,7 @@ Shader.prototype.compile = function(gl) {
 
 
 
-function ShaderProgram(vertexShader, fragmentShader) {
+export function ShaderProgram(vertexShader, fragmentShader) {
     this.vertexShader = vertexShader;
     this.fragmentShader = fragmentShader;
 

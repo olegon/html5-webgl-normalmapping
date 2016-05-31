@@ -1,0 +1,11 @@
+{
+    "plugins": [
+
+    ],
+    "presets": [
+        "es2015"
+    ],
+    "ignore": [
+
+    ]
+}

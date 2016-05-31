@@ -1,4 +1,4 @@
-function Texture (image) {
+export function Texture (image) {
     this.image = image;
     this.glTexture = null;
 }

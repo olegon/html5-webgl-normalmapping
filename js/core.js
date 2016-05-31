@@ -1,4 +1,4 @@
-function Core(canvasId) {
+export function Core(canvasId) {
     this.coreState = {
         keyboard: {
             left: false,

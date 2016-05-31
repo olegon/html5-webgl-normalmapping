@@ -1,4 +1,4 @@
-function Buffer(gl, data) {
+export function Buffer(gl, data) {
     this.glBuffer = gl.createBuffer();
     this.bufferLength = data.length;
 
