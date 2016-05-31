@@ -1,124 +1,142 @@
-export function Core(canvasId) {
-    this.coreState = {
-        keyboard: {
-            left: false,
-            right: false,
-            up: false,
-            down: false
-        },
-        mouse: {
-            x: 0,
-            y: 0
-        }
-    };
+export class Core {
+    constructor (canvasId) {
+        this.coreState = {
+            keyboard: {
+                left: false,
+                right: false,
+                up: false,
+                down: false
+            },
+            mouse: {
+                x: 0,
+                y: 0
+            }
+        };
 
-    this.sharedState = {};
+        this.sharedState = {};
 
-    this.coreState.canvasId = canvasId;
-}
-
-Core.prototype.init = function(initCallback) {
-    var self = this;
-
-    self.coreState.canvasElement = document.getElementById(self.coreState.canvasId);
-    if (self.coreState.canvasElement == null) {
-        throw new Error('Não foi possível encontrar o elemento Canvas.');
+        this.coreState.canvasId = canvasId;
     }
 
-    self.coreState.canvasElement.width = window.outerWidth;
-    self.coreState.canvasElement.height = window.innerHeight;
+    init (initCallback) {
+        var self = this;
 
-    self.coreState.mouse.x = self.coreState.canvasElement.width * 0.75;
-    self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
-
-    self.coreState.canvasContext =  self.coreState.canvasElement.getContext('webgl') || self.coreState.canvasElement.getContext('experimental-webgl');
-    if (this.coreState.canvasContext == null) {
-        throw new Error('Não foi possível obter o contexto do WebGL.');
-    }
-
-    (function setupKeyboardEvents() {
-        function preventScrolling(e) {
-            var ignoreKeyCodesList = [37, 38, 39, 40];
-
-            if (ignoreKeyCodesList.indexOf(e.keyCode) > -1) {
-                return e.preventDefault();
-            }
+        self.coreState.canvasElement = document.getElementById(self.coreState.canvasId);
+        if (self.coreState.canvasElement == null) {
+            throw new Error('Não foi possível encontrar o elemento Canvas.');
         }
 
-        window.addEventListener('keydown', function(e) {
-            if (e.keyCode === 37) {
-                self.coreState.keyboard.left = true;
-            } else if (e.keyCode === 38) {
-                self.coreState.keyboard.up = true;
-            } else if (e.keyCode === 39) {
-                self.coreState.keyboard.right = true;
-            } else if (e.keyCode === 40) {
-                self.coreState.keyboard.down = true;
-            }
+        self.coreState.canvasElement.width = self.coreState.canvasElement.clientWidth;
+        self.coreState.canvasElement.height = self.coreState.canvasElement.clientHeight;
 
-            preventScrolling(e);
-        });
+        self.coreState.mouse.x = self.coreState.canvasElement.width * 0.75;
+        self.coreState.mouse.y = self.coreState.canvasElement.height * 0.3;
 
-        window.addEventListener('keyup', function(e) {
-            if (e.keyCode === 37) {
-                self.coreState.keyboard.left = false;
-            } else if (e.keyCode === 38) {
-                self.coreState.keyboard.up = false;
-            } else if (e.keyCode === 39) {
-                self.coreState.keyboard.right = false;
-            } else if (e.keyCode === 40) {
-                self.coreState.keyboard.down = false;
-            }
-
-            preventScrolling(e);
-        });
-    })();
-
-    (function setupMouseEvents() {
-        function getMousePosition(canvas, e) {
-            var rect = canvas.getBoundingClientRect();
-
-            return {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top
-            };
+        self.coreState.canvasContext =  self.coreState.canvasElement.getContext('webgl') || self.coreState.canvasElement.getContext('experimental-webgl');
+        if (this.coreState.canvasContext == null) {
+            throw new Error('Não foi possível obter o contexto do WebGL.');
         }
 
-        window.addEventListener('mousemove', function(e) {
-            self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
-        });
-    })();
+        (function setupKeyboardEvents() {
+            function preventScrolling(e) {
+                var ignoreKeyCodesList = [37, 38, 39, 40];
 
-    if (initCallback) {
-        initCallback();
-    }
-
-    (function setupGameLoop() {
-        var now = performance.now();
-
-        function gameloop(t) {
-            var dt = t - now;
-            now = t;
-
-            if (self.updateCallback) {
-                self.updateCallback(dt);
+                if (ignoreKeyCodesList.indexOf(e.keyCode) > -1) {
+                    return e.preventDefault();
+                }
             }
 
-            if (self.drawCallback) {
-                self.drawCallback(dt);
+            window.addEventListener('keydown', function(e) {
+                if (e.keyCode === 37) {
+                    self.coreState.keyboard.left = true;
+                } else if (e.keyCode === 38) {
+                    self.coreState.keyboard.up = true;
+                } else if (e.keyCode === 39) {
+                    self.coreState.keyboard.right = true;
+                } else if (e.keyCode === 40) {
+                    self.coreState.keyboard.down = true;
+                }
+
+                preventScrolling(e);
+            });
+
+            window.addEventListener('keyup', function(e) {
+                if (e.keyCode === 37) {
+                    self.coreState.keyboard.left = false;
+                } else if (e.keyCode === 38) {
+                    self.coreState.keyboard.up = false;
+                } else if (e.keyCode === 39) {
+                    self.coreState.keyboard.right = false;
+                } else if (e.keyCode === 40) {
+                    self.coreState.keyboard.down = false;
+                }
+
+                preventScrolling(e);
+            });
+        })();
+
+        (function setupMouseEvents() {
+            function getMousePosition(canvas, e) {
+                var rect = canvas.getBoundingClientRect();
+
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            window.addEventListener('mousemove', function(e) {
+                self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
+            });
+        })();
+
+        if (initCallback) {
+            initCallback();
+        }
+
+        (function setupGameLoop() {
+            var now = performance.now();
+
+            function gameloop(t) {
+                var dt = t - now;
+                now = t;
+
+                if (self.updateCallback) {
+                    self.updateCallback(dt);
+                }
+
+                if (self.drawCallback) {
+                    self.drawCallback(dt);
+                }
+
+                window.requestAnimationFrame(gameloop);
             }
 
             window.requestAnimationFrame(gameloop);
+        })();
+    }
+
+    resize () {
+        var self = this;
+
+        self.coreState.canvasElement.width = self.coreState.canvasElement.clientWidth;
+        self.coreState.canvasElement.height = self.coreState.canvasElement.clientHeight;
+        self.coreState.canvasContext.viewport(0, 0, self.coreState.canvasElement.width, self.coreState.canvasElement.height);
+
+        if (this.resizeCallback) {
+            this.resizeCallback();
         }
+    }
 
-        window.requestAnimationFrame(gameloop);
-    })();
-};
+    setUpdateCallback (updateCallback) {
+        this.updateCallback = updateCallback;
+    }
 
-Core.prototype.setUpdateCallback = function(updateCallback) {
-    this.updateCallback = updateCallback;
-};
+    setDrawCallback (drawCallback) {
+        this.drawCallback = drawCallback;
+    }
 
-Core.prototype.setDrawCallback = function(drawCallback) {
-    this.drawCallback = drawCallback;
-};
+    setResizeCallback (resizeCallback) {
+        this.resizeCallback = resizeCallback;
+    }
+}

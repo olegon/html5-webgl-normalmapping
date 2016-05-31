@@ -2,19 +2,18 @@ import { Core } from './core';
 import { Shader, ShaderProgram } from './shader';
 import { Buffer } from './buffer';
 import { Texture } from './texture';
-import * as math from './math'
-
+import * as math from './math';
 
 window.addEventListener('load', function() {
     setup();
 });
 
-// window.addEventListener('resize', function() {
-//     setup();
-// });
-
 function setup () {
     var core = new Core("canvasElement");
+
+    window.addEventListener('resize', function() {
+        core.resize();
+    });
 
     var tile = document.getElementById('tile');
     var ntile = document.getElementById('ntile');
@@ -25,7 +24,6 @@ function setup () {
         var gl = core.coreState.canvasContext;
 
         gl.clearColor(1.0, 0.0, 0.0, 1.0);
-        gl.viewport(0, 0, core.coreState.canvasElement.width, core.coreState.canvasElement.height);
 
         var vertexShader = new Shader('default_vsh', gl.VERTEX_SHADER);
         var fragmentShader = new Shader('default_fsh', gl.FRAGMENT_SHADER);
@@ -36,14 +34,14 @@ function setup () {
         core.sharedState.proj = math.orthoMatrix(0, core.coreState.canvasElement.width, core.coreState.canvasElement.height, 0, -1, 1);
 
 
-        core.sharedState.geometryBuffer = new Buffer(gl, [
+        core.sharedState.geometryBuffer = new Buffer([
             0.0, 0.0, 0.0,
             TILE_SIZE, 0.0, 0.0,
             TILE_SIZE, TILE_SIZE, 0.0,
             0.0, TILE_SIZE, 0.0
         ]);
 
-        core.sharedState.textureBuffer = new Buffer(gl, [
+        core.sharedState.textureBuffer = new Buffer([
             0.0, 0.0,
             1.0, 0.0,
             1.0, 1.0,
@@ -66,6 +64,10 @@ function setup () {
 
         core.sharedState.defaultProgram.setTexture(gl, "u_texture", 0);
         core.sharedState.defaultProgram.setTexture(gl, "u_map", 1);
+    });
+
+    core.setResizeCallback(function () {
+        core.sharedState.proj = math.orthoMatrix(0, core.coreState.canvasElement.width, core.coreState.canvasElement.height, 0, -1, 1);
     });
 
     core.setUpdateCallback(function() {

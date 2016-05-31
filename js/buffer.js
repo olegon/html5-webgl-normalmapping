@@ -1,19 +1,32 @@
-export function Buffer(gl, data) {
-    this.glBuffer = gl.createBuffer();
-    this.bufferLength = data.length;
+export class Buffer {
+    constructor (data) {
+        this.data = data;
+        this.bufferLength = this.data.length;
+        this.glBuffer = null;
+    }
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
+    bind (gl) {
+        if (this.glBuffer == null) {
+            this.create(gl);
+        }
+        else {
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
+        }
+    }
 
-    gl.bufferData(
-        gl.ARRAY_BUFFER,
-        new Float32Array(data),
-        gl.STATIC_DRAW);
+    create (gl) {
+        this.glBuffer = gl.createBuffer();
+        this.bufferLength = this.data.length;
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
+
+        gl.bufferData(
+            gl.ARRAY_BUFFER,
+            new Float32Array(this.data),
+            gl.STATIC_DRAW);
+    }
+
+    draw (gl, from, to) {
+        gl.drawArrays(gl.TRIANGLE_FAN, from, to);
+    }
 }
-
-Buffer.prototype.bind = function (gl) {
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.glBuffer);
-};
-
-Buffer.prototype.draw = function (gl, from, to) {
-    gl.drawArrays(gl.TRIANGLE_FAN, from, to);
-};
