@@ -73,7 +73,7 @@ function setup () {
     core.setUpdateCallback(function() {
         var gl = core.coreState.canvasContext;
 
-        core.sharedState.defaultProgram.setUniform2f(gl, "u_pos", [core.coreState.mouse.x, core.coreState.mouse.y]);
+        core.sharedState.defaultProgram.setUniform3f(gl, "u_pos", [core.coreState.mouse.x, core.coreState.mouse.y, core.coreState.mouse.z]);
     });
 
     core.setDrawCallback(function() {

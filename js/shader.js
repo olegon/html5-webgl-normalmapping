@@ -112,6 +112,14 @@ export class ShaderProgram {
         gl.uniform2fv(uniformLocation, a, b);
     }
 
+    setUniform3f (gl, uniformName, a, b, c) {
+        this.checkUniformName(gl, uniformName);
+
+        var uniformLocation = this.uniformsLocation[uniformName];
+
+        gl.uniform3fv(uniformLocation, a, b, c);
+    }
+
     setTexture (gl, uniformName, number) {
         this.checkUniformName(gl, uniformName);
 
