@@ -9,7 +9,8 @@ export class Core {
             },
             mouse: {
                 x: 0,
-                y: 0
+                y: 0,
+                z: 128
             }
         };
 
@@ -81,13 +82,23 @@ export class Core {
 
                 return {
                     x: e.clientX - rect.left,
-                    y: e.clientY - rect.top
+                    y: e.clientY - rect.top,
+                    z: self.coreState.mouse.z
                 };
             }
 
             window.addEventListener('mousemove', function(e) {
                 self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
             });
+
+            window.addEventListener('wheel', function(e) {
+                self.coreState.mouse = {
+                    x: self.coreState.mouse.x,
+                    y: self.coreState.mouse.y,
+                    z: Math.max(15, Math.min(self.coreState.mouse.z + e.deltaY * 5, 500))
+                };
+            });
+
         })();
 
         if (initCallback) {
