@@ -91,11 +91,18 @@ export class Core {
                 self.coreState.mouse = getMousePosition(self.coreState.canvasElement, e);
             });
 
+
+            function clamp(value, min = -10, max = 10) {
+                return Math.min(Math.max(value, min), max);
+            }
+
             window.addEventListener('wheel', function(e) {
+                console.log(self.coreState.mouse.z);
+
                 self.coreState.mouse = {
                     x: self.coreState.mouse.x,
                     y: self.coreState.mouse.y,
-                    z: Math.max(15, Math.min(self.coreState.mouse.z + e.deltaY * 5, 500))
+                    z: clamp(self.coreState.mouse.z + clamp(e.deltaY, -4, 4), 16, 256)
                 };
             });
 
